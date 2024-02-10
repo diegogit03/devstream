@@ -1,0 +1,21 @@
+{
+    "name": "diego/devstream",
+    "description": "A educational stream plataform",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DevStream\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Diego Henrique de Oliveira Madero",
+            "email": "60300499+diegogit03@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "diego03/router": "1.*"
+    }
+}
