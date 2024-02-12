@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -9,9 +9,13 @@
 </head>
 
 <body>
-    <video id='hls-example' class="video-js vjs-default-skin" width="400" height="300" controls>
+    <?php foreach ($streams as $stream) { ?>
+        <?= $stream->title ?>
+    <?php } ?>
+
+    <!-- <video id='hls-example' class="video-js vjs-default-skin" width="400" height="300" controls>
         <source type="application/x-mpegURL" src="http://localhost:8080/hls/mystream.m3u8">
-    </video>
+    </video> -->
     <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
     <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>

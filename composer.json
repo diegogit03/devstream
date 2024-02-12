@@ -16,6 +16,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "diego03/router": "1.*"
+        "diego03/router": "1.*",
+        "vlucas/phpdotenv": "^5.6"
     }
 }
