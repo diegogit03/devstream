@@ -2,6 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use DevStream\Models\Stream;
 use Diego03\Router\Router;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -9,14 +10,7 @@ $dotenv->load();
 
 $router = new Router();
 
-$servername = $_ENV['DB_HOST'];
-$user = $_ENV['DB_USER'];
-$pass = $_ENV['DB_PASS'];
-$db = $_ENV['DB_NAME'];
-
-$connection = new PDO("mysql:host={$servername};dbname={$db}", $user, $pass, [
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-]);
+// $connection = new PDO();
 
 /*
     Entidades:
@@ -26,22 +20,16 @@ $connection = new PDO("mysql:host={$servername};dbname={$db}", $user, $pass, [
     - Like
 */
 
-$router->get('/', function () use ($connection) {
-    $query = $connection->prepare('SELECT * FROM streams');
-    $query->execute();
-
-    $streams = $query->fetchAll();
+$router->get('/', function () {
+    $streams = Stream::all();
 
     // echo password_hash('12345678', PASSWORD_ARGON2I);
 
     require __DIR__ . '/views/home.php';
 });
 
-$router->get('/streams/:id', function ($id) use ($connection) {
-    $query = $connection->prepare('SELECT * FROM streams WHERE id = ?');
-    $query->execute([$id]);
-
-    $stream = $query->fetch();
+$router->get('/streams/:id', function ($id) {
+    $stream = Stream::find($id);
 
     require __DIR__ . '/views/stream.php';
 });
