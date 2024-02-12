@@ -37,6 +37,15 @@ $router->get('/', function () use ($connection) {
     require __DIR__ . '/views/home.php';
 });
 
+$router->get('/streams/:id', function ($id) use ($connection) {
+    $query = $connection->prepare('SELECT * FROM streams WHERE id = ?');
+    $query->execute([$id]);
+
+    $stream = $query->fetch();
+
+    require __DIR__ . '/views/stream.php';
+});
+
 $route = $router->match(
     $_SERVER['REQUEST_METHOD'],
     $_SERVER['REQUEST_URI']
