@@ -2,10 +2,10 @@
 
 namespace DevStream\Models;
 
-class Stream extends Model
+class User extends Model
 {
     function __construct()
     {
-        $this->tableName = 'streams';
+        $this->tableName = 'users';
     }
 }

@@ -16,19 +16,17 @@ class StreamsController
 
     public function index()
     {
-        $streams = Stream::all();
+        $model = new Stream();
+        $streams = $model->all();
 
         return $this->view->render('home', compact('streams'));
     }
 
     public function show($id)
     {
-        $stream = Stream::find($id);
+        $model = new Stream();
+        $stream = $model->find($id);
 
         return $this->view->render('stream', compact('stream'));
-    }
-
-    public function create()
-    {
     }
 }
