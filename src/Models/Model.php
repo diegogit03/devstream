@@ -30,21 +30,33 @@ class Model
 {
     protected $tableName = '';
 
+    public Connection $conn;
+
+    public function __construct()
+    {
+        $this->conn = Connection::getInstance();
+    }
+
     public function all()
     {
-        var_dump(self::$tableName);
-        $conn = Connection::getInstance();
-        $query = $conn->prepare('SELECT * FROM ?');
-        $query->execute([self::$tableName]);
+        $query = $this->conn->prepare("SELECT * FROM {$this->tableName}");
+        $query->execute();
 
         return $query->fetchAll();
     }
 
     public function find($id)
     {
-        $conn = Connection::getInstance();
-        $query = $conn->prepare('SELECT * FROM ? WHERE id = ?');
-        $query->execute([self::$tableName, $id]);
+        $query = $this->conn->prepare("SELECT * FROM {$this->tableName} WHERE id = ?");
+        $query->execute([$id]);
+
+        return $query->fetch();
+    }
+
+    public function findBy($field, $value)
+    {
+        $query = $this->conn->prepare("SELECT * FROM {$this->tableName} WHERE {$field} = ?");
+        $query->execute([$value]);
 
         return $query->fetch();
     }

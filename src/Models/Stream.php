@@ -4,8 +4,9 @@ namespace DevStream\Models;
 
 class Stream extends Model
 {
-    function __construct()
+    public function __construct()
     {
+        parent::__construct();
         $this->tableName = 'streams';
     }
 }

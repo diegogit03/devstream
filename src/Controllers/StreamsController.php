@@ -3,17 +3,9 @@
 namespace DevStream\Controllers;
 
 use DevStream\Models\Stream;
-use League\Plates\Engine;
 
-class StreamsController
+class StreamsController extends Controller
 {
-    protected Engine $view;
-
-    public function __construct()
-    {
-        $this->view = new Engine(ROOT_DIR . '/views');
-    }
-
     public function index()
     {
         $model = new Stream();

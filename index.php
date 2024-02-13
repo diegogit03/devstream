@@ -2,6 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use DevStream\Controllers\AuthController;
 use DevStream\Controllers\StreamsController;
 use Diego03\Router\Router;
 
@@ -12,7 +13,7 @@ $router = new Router();
 
 define('ROOT_DIR', __DIR__);
 
-// $connection = new PDO();
+session_start();
 
 /*
     Entidades:
@@ -24,9 +25,13 @@ define('ROOT_DIR', __DIR__);
 
 // echo password_hash('12345678', PASSWORD_ARGON2I);
 $streamsController = new StreamsController();
+$authController = new AuthController();
 
 $router->get('/', fn () => $streamsController->index());
 $router->get('/streams/:id', fn ($id) => $streamsController->show($id));
+
+$router->get('/login', fn () => $authController->create());
+$router->post('/login', fn () => $authController->store());
 
 $route = $router->match(
     $_SERVER['REQUEST_METHOD'],
