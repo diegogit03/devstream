@@ -10,7 +10,7 @@
 
 <body>
     <?php foreach ($streams as $stream) { ?>
-        <?= $stream->title ?>
+        <a href="/streams/<?= $stream->id ?>"><?= $stream->title ?></a>
     <?php } ?>
 </body>
 

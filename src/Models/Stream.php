@@ -4,11 +4,6 @@ namespace DevStream\Models;
 
 use PDO;
 
-/**
- * The Singleton class defines the `GetInstance` method that serves as an
- * alternative to constructor and lets clients access the same instance of this
- * class over and over.
- */
 class Connection extends PDO
 {
     private static $instances = [];
@@ -48,6 +43,6 @@ class Stream
         $query = $conn->prepare('SELECT * FROM streams WHERE id = ?');
         $query->execute([$id]);
 
-        $stream = $query->fetch();
+        return $query->fetch();
     }
 }

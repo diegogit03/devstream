@@ -2,13 +2,15 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use DevStream\Models\Stream;
+use DevStream\Controllers\StreamsController;
 use Diego03\Router\Router;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $router = new Router();
+
+define('ROOT_DIR', __DIR__);
 
 // $connection = new PDO();
 
@@ -20,19 +22,11 @@ $router = new Router();
     - Like
 */
 
-$router->get('/', function () {
-    $streams = Stream::all();
+// echo password_hash('12345678', PASSWORD_ARGON2I);
+$streamsController = new StreamsController();
 
-    // echo password_hash('12345678', PASSWORD_ARGON2I);
-
-    require __DIR__ . '/views/home.php';
-});
-
-$router->get('/streams/:id', function ($id) {
-    $stream = Stream::find($id);
-
-    require __DIR__ . '/views/stream.php';
-});
+$router->get('/', fn () => $streamsController->index());
+$router->get('/streams/:id', fn ($id) => $streamsController->show($id));
 
 $route = $router->match(
     $_SERVER['REQUEST_METHOD'],
@@ -44,6 +38,6 @@ if ($route === null) {
     die;
 }
 
-$route['handler'](
+echo $route['handler'](
     ...$route['params']
 );
