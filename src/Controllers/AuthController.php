@@ -26,6 +26,8 @@ class AuthController extends Controller
 
         $_SESSION['user_id'] = $user->id;
 
+        setcookie('user_id', $user->id);
+
         header('location: /');
     }
 }

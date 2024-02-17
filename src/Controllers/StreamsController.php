@@ -21,4 +21,9 @@ class StreamsController extends Controller
 
         return $this->view->render('stream', compact('stream'));
     }
+
+    public function create()
+    {
+        return $this->view->render('createStream');
+    }
 }
