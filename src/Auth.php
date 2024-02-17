@@ -5,9 +5,9 @@ use DevStream\Models\User;
 
 class Auth
 {
-    protected static User $user;
+    protected static $user = false;
 
-    public static function user(): User | false
+    public static function user()
     {
         if (self::$user) {
             return self::$user;
@@ -26,6 +26,8 @@ class Auth
         if (!$user) {
             return false;
         }
+
+        self::$user = $user;
 
         return $user;
     }

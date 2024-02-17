@@ -29,9 +29,11 @@ $authController = new AuthController();
 
 $router->get('/', fn () => $streamsController->index());
 $router->get('/streams/:id', fn ($id) => $streamsController->show($id));
+$router->get('/streams/create', fn ($id) => $streamsController->show($id));
 
 $router->get('/login', fn () => $authController->create());
 $router->post('/login', fn () => $authController->store());
+$router->get('/logout', fn () => $authController->destroy());
 
 $route = $router->match(
     $_SERVER['REQUEST_METHOD'],

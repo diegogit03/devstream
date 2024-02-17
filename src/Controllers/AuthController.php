@@ -30,4 +30,11 @@ class AuthController extends Controller
 
         header('location: /');
     }
+
+    public function destroy()
+    {
+        unset($_COOKIE['user_id']);
+        unset($_SESSION['user_id']);
+        header('location: /');
+    }
 }

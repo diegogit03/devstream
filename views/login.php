@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php $this->layout('layout', ['title' => 'User Profile']) ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
-</head>
-
-<body>
+<?php $this->start('main') ?>
     <form action="/login" method="post">
-        <input type="email" name="email" placeholder="e-mail" required>
-        <input type="password" name="password" placeholder="senha" required>
-        <button type="submit">Entrar</button>
+        <input class="form-control" type="email" name="email" placeholder="e-mail" required>
+        <input class="form-control" type="password" name="password" placeholder="senha" required>
+        <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
-</body>
-
-</html>
+<?php $this->stop() ?>
