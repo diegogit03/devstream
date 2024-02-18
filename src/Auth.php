@@ -13,11 +13,11 @@ class Auth
             return self::$user;
         }
 
-        $user_id = $_COOKIE['user_id'];
-
-        if (!$user_id) {
+        if (!isset($_SESSION['user_id'])) {
             return false;
         }
+
+        $user_id = $_SESSION['user_id'];
 
         $model = new User();
 

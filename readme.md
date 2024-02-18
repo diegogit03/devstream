@@ -8,10 +8,10 @@ A php streaming plataform
 -   [ ] Streams
     -   [x] List Streams
     -   [x] Show Streams
-    -   [ ] Create Streams
+    -   [x] Create Streams
 -   [ ] Cookie Authentication
-    -   [ ] Login
+    -   [x] Login
     -   [ ] Register
-    -   [ ] Logout
+    -   [x] Logout
 -   [ ] Realtime-Chat
 -   [ ] Likes and Views

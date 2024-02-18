@@ -2,7 +2,10 @@
 
 namespace DevStream\Controllers;
 
+use DevStream\Auth;
 use DevStream\Models\Stream;
+use Psr\Http\Message\RequestInterface;
+use Symfony\Component\Uid\Uuid;
 
 class StreamsController extends Controller
 {
@@ -11,19 +14,36 @@ class StreamsController extends Controller
         $model = new Stream();
         $streams = $model->all();
 
-        return $this->view->render('home', compact('streams'));
+        return $this->render('home', compact('streams'));
     }
 
-    public function show($id)
+    public function show(RequestInterface $request, array $args)
     {
         $model = new Stream();
-        $stream = $model->find($id);
+        $stream = $model->find($args['id']);
 
-        return $this->view->render('stream', compact('stream'));
+        return $this->render('stream', compact('stream'));
     }
 
     public function create()
     {
-        return $this->view->render('createStream');
+        return $this->render('createStream');
+    }
+
+    public function store()
+    {
+        $user = Auth::user();
+        $record_id = Uuid::v4();
+
+        $model = new Stream();
+        $stream = $model->create([
+            'title'=> $_POST['title'],
+            'record_id'=> $record_id,
+            'user_id' => $user->id,
+        ]);
+
+        $stream = $model->findBy('record_id', $record_id);
+
+        return $this->redirect("/streams/{$stream->id}/edit");
     }
 }

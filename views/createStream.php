@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php $this->layout('layout', ['title' => 'User Profile']) ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
-</head>
-
-<body>
-    <form action="" method="post">
-        <input type="text">
-        <input type="text">
-        <input type="text">
+<?php $this->start('main') ?>
+    <form action="/streams" method="POST">
+        <input class="form-control" type="text" name="title" id="">
+        <button class="btn btn-primary" type="submit">Criar</button>
     </form>
-</body>
-
-</html>
+<?php $this->stop() ?>

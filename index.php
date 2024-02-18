@@ -4,47 +4,35 @@ require __DIR__ . '/vendor/autoload.php';
 
 use DevStream\Controllers\AuthController;
 use DevStream\Controllers\StreamsController;
-use Diego03\Router\Router;
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-$router = new Router();
+use League\Route\Router;
 
 define('ROOT_DIR', __DIR__);
 
 session_start();
 
-/*
-    Entidades:
-    - Usuários
-    - Streams
-    - Messages
-    - Like
-*/
+$request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
+    $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
+);
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$router = new Router;
 
 // echo password_hash('12345678', PASSWORD_ARGON2I);
 $streamsController = new StreamsController();
 $authController = new AuthController();
 
-$router->get('/', fn () => $streamsController->index());
-$router->get('/streams/:id', fn ($id) => $streamsController->show($id));
-$router->get('/streams/create', fn ($id) => $streamsController->show($id));
+$router->get('/', [StreamsController::class, 'index']);
+$router->get('/streams/create', [StreamsController::class, 'create']);
+$router->post('/streams', [StreamsController::class, 'store']);
+$router->get('/streams/{id}', [StreamsController::class, 'show']);
 
 $router->get('/login', fn () => $authController->create());
 $router->post('/login', fn () => $authController->store());
 $router->get('/logout', fn () => $authController->destroy());
 
-$route = $router->match(
-    $_SERVER['REQUEST_METHOD'],
-    $_SERVER['REQUEST_URI']
-);
+$response = $router->dispatch($request);
 
-if ($route === null) {
-    echo '404 Not Found';
-    die;
-}
-
-echo $route['handler'](
-    ...$route['params']
-);
+// send the response to the browser
+(new Laminas\HttpHandlerRunner\Emitter\SapiEmitter)->emit($response);
