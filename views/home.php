@@ -1,7 +1,9 @@
 <?php $this->layout('layout', ['title' => 'User Profile']) ?>
 
 <?php $this->start('main') ?>
+<ul>
     <?php foreach ($streams as $stream) { ?>
-        <a href="/streams/<?= $stream->id ?>"><?= $stream->title ?></a>
+        <li><a href="/streams/<?= $stream->id ?>"><?= $stream->title ?></a></li>
     <?php } ?>
+</ul>
 <?php $this->stop() ?>
