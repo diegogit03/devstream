@@ -27,6 +27,10 @@ class Controller
 
     public function redirect(string $url)
     {
+        if ($url === 'back') {
+            $url = $_SERVER['HTTP_REFERER'];
+        }
+
         return new RedirectResponse($url);
     }
 }

@@ -3,6 +3,7 @@
 namespace DevStream\Controllers;
 
 use DevStream\Auth;
+use DevStream\Models\Connection;
 use DevStream\Models\Stream;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Uid\Uuid;
@@ -27,7 +28,7 @@ class StreamsController extends Controller
 
     public function create()
     {
-        return $this->render('createStream');
+        return $this->render('streamEditor');
     }
 
     public function store()
@@ -45,5 +46,26 @@ class StreamsController extends Controller
         $stream = $model->findBy('record_id', $record_id);
 
         return $this->redirect("/streams/{$stream->id}/edit");
+    }
+
+    public function edit(RequestInterface $request, $args)
+    {
+        $id = $args['id'];
+
+        $model = new Stream();
+        $stream = $model->find($id);
+
+        return $this->render('streamEditor', compact('stream'));
+    }
+
+    public function update(RequestInterface $request, $args)
+    {
+        $id = $args['id'];
+        $title = $_POST['title'];
+
+        $query = Connection::getInstance()->prepare('UPDATE streams SET `title` = ? WHERE id = ?');
+        $query->execute([$title, $id]);
+
+        return $this->redirect('back');
     }
 }
