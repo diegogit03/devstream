@@ -11,7 +11,7 @@
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-white p-3">
         <div class="container-fluid justify-between">
-            <a class="navbar-brand" href="#">Dev<span class="text-primary">Stream</span></a>
+            <a class="navbar-brand" href="/">Dev<span class="text-primary">Stream</span></a>
             <?php if (DevStream\Auth::user()) { ?>
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

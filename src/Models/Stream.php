@@ -9,4 +9,9 @@ class Stream extends Model
         parent::__construct();
         $this->tableName = 'streams';
     }
+
+    public function allFromUser($id)
+    {
+        return $this->query('SELECT * FROM streams WHERE user_id = 1')->fetchAll();
+    }
 }
