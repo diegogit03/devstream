@@ -40,24 +40,21 @@ class Model
 
     public function all()
     {
-        $query = $this->conn->prepare("SELECT * FROM {$this->tableName}");
-        $query->execute();
+        $query = $this->query("SELECT * FROM {$this->tableName}");
 
         return $query->fetchAll();
     }
 
     public function find($id)
     {
-        $query = $this->conn->prepare("SELECT * FROM {$this->tableName} WHERE id = ?");
-        $query->execute([$id]);
+        $query = $this->query("SELECT * FROM {$this->tableName} WHERE id = ?", [$id]);
 
         return $query->fetch();
     }
 
     public function findBy($field, $value)
     {
-        $query = $this->conn->prepare("SELECT * FROM {$this->tableName} WHERE {$field} = ?");
-        $query->execute([$value]);
+        $query = $this->query("SELECT * FROM {$this->tableName} WHERE {$field} = ?", [$value]);
 
         return $query->fetch();
     }
