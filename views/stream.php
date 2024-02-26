@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-12 col-md-8">
         <video id='stream-player' class="video-js vjs-default-skin w-100" width="400" height="300" controls>
-            <source type="application/x-mpegURL" src="https://a803272ee73cc7.lhr.life/hls/<?= $stream->record_id ?>.m3u8">
+            <source type="application/x-mpegURL" src="http://localhost:8080/hls/<?= $stream->record_id ?>.m3u8">
         </video>
         <h2><?= $stream->title ?></h2>
     </div>
