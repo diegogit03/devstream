@@ -61,12 +61,6 @@
             name: 'image',
         });
 
-        const file = pond.addFile('data:image/png;base64,<?= $stream->image ?>', {});
-
-        file.fileExtension = 'image/png'
-
-        console.log(pond.name)
-
         const toggleRecord = document.querySelector("#toggleRecord");
         const input = document.querySelector("#record");
 

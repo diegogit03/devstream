@@ -21,4 +21,26 @@ class UsersController extends Controller {
         return $this->render('userDetails', compact('user', 'streams'));
     }
 
+    public function create()
+    {
+        return $this->render('register');
+    }
+
+    public function store()
+    {
+        $userModel = new User();
+
+        $userModel->create([
+            'name' => $_POST['name'],
+            'email' => $_POST['email'],
+            'password' => password_hash($_POST['password'], PASSWORD_BCRYPT)
+        ]);
+
+        $user = $userModel->findBy('email', $_POST['email']);
+
+        $_SESSION['user_id'] = $user->id;
+
+        return $this->redirect('/');
+    }
+
 }

@@ -32,7 +32,6 @@ $dotenv->load();
 
 $router = new Router;
 
-// echo password_hash('12345678', PASSWORD_ARGON2I);
 $authController = new AuthController();
 
 $router->get('/', [StreamsController::class, 'index']);
@@ -43,6 +42,8 @@ $router->put('/streams/{id}', [StreamsController::class, 'update']);
 $router->get('/streams/{id}/edit', [StreamsController::class, 'edit']);
 
 $router->get('/users/{id}', [UsersController::class, 'show']);
+$router->get('/register', [UsersController::class, 'create']);
+$router->post('/register', [UsersController::class, 'store']);
 
 $router->get('/login', [AuthController::class, 'create']);
 $router->post('/login', [AuthController::class, 'store']);
