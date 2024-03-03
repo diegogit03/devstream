@@ -40,12 +40,8 @@ class StreamsController extends Controller
         $user = Auth::user();
         $recordId = Uuid::v4();
 
-        // $request->get
-
         $tmpImage = $_FILES['image']['tmp_name'];
         $size = $_FILES['image']['size'];
-
-        // dd($tmpImage);
 
         $fp = fopen($tmpImage, "rb");
         $image = fread($fp, $size);
