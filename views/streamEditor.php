@@ -9,13 +9,13 @@
 <?php $this->end() ?>
 
 <?php $this->start('main') ?>
-    <form action="<?= $stream ? "/streams/{$stream->id}?_method=PUT" : '/streams' ?>" method="POST" class="row">
+    <form enctype="multipart/form-data" action="<?= ($stream ?? false) ? "/streams/{$stream->id}?_method=PUT" : '/streams' ?>" method="POST" class="row">
         <div class="col">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-2">
                         <label class="form-label" for="image">Imagem:</label>
-                        <input type="file" id="image">
+                        <input type="file" id="image" name="image">
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="title">Titulo:</label>
@@ -55,10 +55,15 @@
         const inputElement = document.querySelector('#image');
 
         const pond = FilePond.create(inputElement, {
-            acceptedFileTypes: ['image/png', 'image/jpeg'],
+            acceptedFileTypes: ['image/*'],
+            storeAsFile: true,
             required: true,
             name: 'image',
         });
+
+        const file = pond.addFile('data:image/png;base64,<?= $stream->image ?>', {});
+
+        file.fileExtension = 'image/png'
 
         console.log(pond.name)
 

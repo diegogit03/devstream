@@ -5,7 +5,7 @@ A php streaming plataform
 ## Features
 
 -   [x] RTMP server
--   [ ] Streams
+-   [x] Streams
     -   [x] List Streams
     -   [x] Show Streams
     -   [x] Create Streams

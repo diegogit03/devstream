@@ -35,19 +35,32 @@ class StreamsController extends Controller
         return $this->render('streamEditor');
     }
 
-    public function store()
+    public function store(RequestInterface $request)
     {
         $user = Auth::user();
-        $record_id = Uuid::v4();
+        $recordId = Uuid::v4();
+
+        // $request->get
+
+        $tmpImage = $_FILES['image']['tmp_name'];
+        $size = $_FILES['image']['size'];
+
+        // dd($tmpImage);
+
+        $fp = fopen($tmpImage, "rb");
+        $image = fread($fp, $size);
+        $image = addslashes($image);
+        fclose($fp);
 
         $model = new Stream();
         $stream = $model->create([
             'title'=> $_POST['title'],
-            'record_id'=> $record_id,
+            'record_id'=> $recordId,
             'user_id' => $user->id,
+            'image' => $image
         ]);
 
-        $stream = $model->findBy('record_id', $record_id);
+        $stream = $model->findBy('record_id', $recordId);
 
         return $this->redirect("/streams/{$stream->id}/edit");
     }
@@ -58,6 +71,8 @@ class StreamsController extends Controller
 
         $model = new Stream();
         $stream = $model->find($id);
+
+        $stream->image = base64_encode($stream->image);
 
         return $this->render('streamEditor', compact('stream'));
     }
