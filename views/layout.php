@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <?=$this->section('assets')?>
 </head>
-<body class="bg-light">
+<body class="bg-secondary">
     <nav class="navbar navbar-expand-lg navbar-light bg-white p-3">
         <div class="container-fluid justify-between">
             <a class="navbar-brand" href="/">Dev<span class="text-primary">Stream</span></a>

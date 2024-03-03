@@ -5,6 +5,7 @@ namespace DevStream\Controllers;
 use DevStream\Auth;
 use DevStream\Models\Connection;
 use DevStream\Models\Stream;
+use DevStream\Models\User;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -23,7 +24,10 @@ class StreamsController extends Controller
         $model = new Stream();
         $stream = $model->find($args['id']);
 
-        return $this->render('stream', compact('stream'));
+        $userModel = new User();
+        $user = $userModel->find($stream->user_id);
+
+        return $this->render('stream', compact('stream', 'user'));
     }
 
     public function create()

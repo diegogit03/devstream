@@ -1,13 +1,31 @@
 <?php $this->layout('layout') ?>
 
+<?php $this->start('assets') ?>
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link
+        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet"
+    />
+<?php $this->end() ?>
+
 <?php $this->start('main') ?>
     <form action="<?= $stream ? "/streams/{$stream->id}?_method=PUT" : '/streams' ?>" method="POST" class="row">
         <div class="col">
-            <div class="mb-2">
-                <label for="title">Titulo:</label>
-                <input class="form-control" type="text" name="title" id="title" value="<?= $stream->title ?? '' ?>">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label class="form-label" for="image">Imagem:</label>
+                        <input type="file" id="image">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="title">Titulo:</label>
+                        <input class="form-control" type="text" name="title" id="title" value="<?= $stream->title ?? '' ?>" required>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <button class="btn btn-primary" type="submit">Salvar</button>
+                </div>
             </div>
-            <button class="btn btn-primary" type="submit">Salvar</button>
         </div>
         <?php if ($stream ?? '') { ?>
             <div class="col-4">
@@ -26,7 +44,24 @@
 <?php $this->stop() ?>
 
 <?php $this->start('scripts') ?>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
     <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+        const inputElement = document.querySelector('#image');
+
+        const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['image/png', 'image/jpeg'],
+            required: true,
+            name: 'image',
+        });
+
+        console.log(pond.name)
+
         const toggleRecord = document.querySelector("#toggleRecord");
         const input = document.querySelector("#record");
 
