@@ -8,9 +8,9 @@ A php streaming plataform
 -   [x] Streams
     -   [x] List Streams
     -   [x] Show Streams
--   [ ] Cookie Authentication
+-   [x] Cookie Authentication
     -   [x] Login
-    -   [ ] Register
+    -   [x] Register
     -   [x] Logout
 -   [x] Stream Studio
     -   [x] Create Streams
