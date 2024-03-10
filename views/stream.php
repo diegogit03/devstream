@@ -21,9 +21,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-2">
-                    <video id='stream-player' class="video-js vjs-default-skin w-100" width="400" height="300" controls>
+                    <video
+                        data-setup="{
+                            autoplay: true
+                        }"
+                        id="stream-player"
+                        class="video-js vjs-default-skin w-100"
+                        height="300"
+                        controls
+                        preload="auto"
+                        autoplay="true">
                         <source type="application/x-mpegURL" src="https://e3a8ea657b92bb.lhr.life/hls/<?= $stream->record_id ?>.m3u8">
-                        <!-- <source type="application/x-mpegURL" src="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"> -->
                     </video>
                 </div>
                 <h2><?= $stream->title ?></h2>
@@ -32,9 +40,9 @@
                         <img src="https://ui-avatars.com/api/?name=<?= $stream->user->name ?>" alt="" style="width: 50px;">
                         <span><?= $stream->user->name ?></span>
                     </div>
-                    <button id="like-button" type="button" class="btn btn-primary">
+                    <button id="like-button" type="button" class="btn btn-primary" <?= $alreadyLiked ? 'disabled' : '' ?>>
                         <i class="bi bi-heart"></i>
-                        <span id="likes-count">38</span>
+                        <span id="likes-count"><?= count($stream->likes) ?></span>
                     </button>
                 </div>
             </div>
@@ -72,8 +80,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.0/socket.io.js" integrity="sha512-arrjWL9j77mqBliRaQx5EutCwBC7259LWHAkOhDVpCoGVx4sRMcnYBBs0HedwvLvWqn7/bmBlr20eiESgHe2tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-        var player = videojs('stream-player');
-        player.play();
+        var player = videojs('stream-player', {
+            techOrder: ['hls', 'html5'],
+            live: true
+        });
+
+        player.autoplay('any')
 
         const socket = io('http://localhost:2021');
 

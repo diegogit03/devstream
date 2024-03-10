@@ -38,13 +38,23 @@ $io->on('connection', function ($socket) use ($io) {
         ]);
     });
 
-    // $socket->on('like', function () use ($io, $socket) {
-    //     global $sockets;
+    $socket->on('like', function () use ($io, $socket) {
+        global $sockets;
 
-    //     $stream_id = $sockets[$socket->id]['stream_id'];
+        $socket_data = $sockets[$socket->id];
 
-    //     $io->to($stream_id)->emit('like');
-    // });
+        $stream_id = $socket_data['stream_id'];
+
+        $exists = Like::where('stream_id', $socket_data['stream_id'])
+            ->where('user_id', $socket_data['user_id'])
+            ->first();
+
+        if ($exists) return;
+
+        Like::create($socket_data);
+
+        $io->to($stream_id)->emit('like');
+    });
 });
 
 Worker::runAll();

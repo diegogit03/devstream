@@ -12,8 +12,8 @@ A php streaming plataform
     -   [x] Login
     -   [ ] Register
     -   [x] Logout
--   [ ] Stream Studio
+-   [x] Stream Studio
     -   [x] Create Streams
-    -   [ ] Edit Streams
--   [ ] Realtime-Chat
--   [ ] Likes and Views
+    -   [x] Edit Streams
+-   [x] Realtime-Chat
+-   [x] Likes and Views

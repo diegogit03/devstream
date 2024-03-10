@@ -4,6 +4,7 @@ namespace DevStream\Controllers;
 
 use DevStream\Auth;
 use DevStream\Models\Connection;
+use DevStream\Models\Like;
 use DevStream\Models\Stream;
 use DevStream\Models\User;
 use Psr\Http\Message\RequestInterface;
@@ -23,11 +24,16 @@ class StreamsController extends Controller
         $stream = Stream::find($args['id']);
 
         $stream->load('user');
+        $stream->load('likes');
         $stream->load('messages.user');
 
         $user_id = Auth::user()->id;
 
-        return $this->render('stream', compact('stream', 'user_id'));
+        $alreadyLiked = !!(Like::where('stream_id', $stream->id)
+            ->where('user_id', $user_id)
+            ->first());
+
+        return $this->render('stream', compact('stream', 'user_id', 'alreadyLiked'));
     }
 
     public function create()
@@ -79,8 +85,7 @@ class StreamsController extends Controller
         unlink(ROOT_DIR . '/public/uploads/' . $stream->image_filename);
         move_uploaded_file($tmpImage, ROOT_DIR . '/public/uploads/' . $stream->image_filename);
 
-        $query = Connection::getInstance()->prepare('UPDATE streams SET `title` = ? WHERE id = ?');
-        $query->execute([$title,$id]);
+        Stream::find($stream->id)->update(compact('title'));
 
         return $this->redirect('back');
     }

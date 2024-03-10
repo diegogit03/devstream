@@ -4,8 +4,6 @@ namespace DevStream\Models;
 
 class Stream extends Model
 {
-    public $timestamps = false;
-
     protected $fillable = [
         'title',
         'record_id',
@@ -22,5 +20,10 @@ class Stream extends Model
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }
 }

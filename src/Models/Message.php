@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
-    public $timestamps = false;
-
     protected $fillable = [
         'user_id',
         'stream_id',

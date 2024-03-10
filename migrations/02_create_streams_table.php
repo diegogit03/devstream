@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('record_id')->unique();
             $table->bigInteger('views');
-            $table->bigInteger('likes');
             $table->string('image_filename');
             $table->foreignId('user_id')->constrained();
         });
