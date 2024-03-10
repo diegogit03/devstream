@@ -1,5 +1,7 @@
 # Devstream
 
+![alt](./images/screenshot.jpg)
+
 A php streaming plataform
 
 ## Features
