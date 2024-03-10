@@ -5,7 +5,7 @@
     <?php foreach ($streams as $stream) { ?>
         <div class="col-12 col-sm-6 col-md-4">
             <div class="card">
-                <img src="https://picsum.photos/id/237/200/100" class="card-img-top" alt="...">
+                <img src="/uploads/<?= $stream->image_filename ?>" class="card-img-top" alt="...">
                 <div class="card-body d-flex align-items-center">
                     <img src="https://ui-avatars.com/api/?name=Devstream" style="width: 50px">
                     <div>

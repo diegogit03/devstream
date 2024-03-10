@@ -1,22 +1,13 @@
 <?php
 
-function dd() {
-    echo '<pre>';
-    var_dump( func_get_args() );
-    echo '</pre>';
-    die;
-}
-
 require __DIR__ . '/vendor/autoload.php';
+
+require __DIR__ . '/config.php';
 
 use DevStream\Controllers\AuthController;
 use DevStream\Controllers\StreamsController;
 use DevStream\Controllers\UsersController;
 use League\Route\Router;
-
-define('ROOT_DIR', __DIR__);
-
-session_start();
 
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
@@ -27,12 +18,7 @@ if (isset($request->getQueryParams()['_method'])) {
     $request = $request->withMethod($request->getQueryParams()['_method']);
 }
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
 $router = new Router;
-
-$authController = new AuthController();
 
 $router->get('/', [StreamsController::class, 'index']);
 $router->get('/streams/create', [StreamsController::class, 'create']);

@@ -13,21 +13,21 @@ class StreamsController extends Controller
 {
     public function index()
     {
-        $model = new Stream();
-        $streams = $model->all();
+        $streams = Stream::all();
 
         return $this->render('home', compact('streams'));
     }
 
     public function show(RequestInterface $request, array $args)
     {
-        $model = new Stream();
-        $stream = $model->find($args['id']);
+        $stream = Stream::find($args['id']);
 
-        $userModel = new User();
-        $user = $userModel->find($stream->user_id);
+        $stream->load('user');
+        $stream->load('messages.user');
 
-        return $this->render('stream', compact('stream', 'user'));
+        $user_id = Auth::user()->id;
+
+        return $this->render('stream', compact('stream', 'user_id'));
     }
 
     public function create()
@@ -41,22 +41,19 @@ class StreamsController extends Controller
         $recordId = Uuid::v4();
 
         $tmpImage = $_FILES['image']['tmp_name'];
-        $size = $_FILES['image']['size'];
+        $name = $_FILES['image']['name'];
 
-        $fp = fopen($tmpImage, "rb");
-        $image = fread($fp, $size);
-        $image = addslashes($image);
-        fclose($fp);
+        $filename = Uuid::v4() . '-' . $name;
+
+        move_uploaded_file($tmpImage, ROOT_DIR . '/public/uploads/' . $filename);
 
         $model = new Stream();
         $stream = $model->create([
             'title'=> $_POST['title'],
             'record_id'=> $recordId,
             'user_id' => $user->id,
-            'image' => $image
+            'image_filename' => $filename
         ]);
-
-        $stream = $model->findBy('record_id', $recordId);
 
         return $this->redirect("/streams/{$stream->id}/edit");
     }
@@ -68,8 +65,6 @@ class StreamsController extends Controller
         $model = new Stream();
         $stream = $model->find($id);
 
-        $stream->image = base64_encode($stream->image);
-
         return $this->render('streamEditor', compact('stream'));
     }
 
@@ -78,8 +73,14 @@ class StreamsController extends Controller
         $id = $args['id'];
         $title = $_POST['title'];
 
+        $stream = (new Stream())->find($id);
+        $tmpImage = $_FILES['image']['tmp_name'];
+
+        unlink(ROOT_DIR . '/public/uploads/' . $stream->image_filename);
+        move_uploaded_file($tmpImage, ROOT_DIR . '/public/uploads/' . $stream->image_filename);
+
         $query = Connection::getInstance()->prepare('UPDATE streams SET `title` = ? WHERE id = ?');
-        $query->execute([$title, $id]);
+        $query->execute([$title,$id]);
 
         return $this->redirect('back');
     }

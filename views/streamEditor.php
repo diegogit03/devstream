@@ -61,17 +61,21 @@
             name: 'image',
         });
 
-        const toggleRecord = document.querySelector("#toggleRecord");
-        const input = document.querySelector("#record");
+        <?php if ($stream ?? '') { ?>
+            pond.addFile('/uploads/<?= $stream->image_filename ?>')
 
-        toggleRecord.addEventListener("click", function () {
+            const toggleRecord = document.querySelector("#toggleRecord");
+            const input = document.querySelector("#record");
 
-            // toggle the type attribute
-            const type = input.getAttribute("type") === "password" ? "text" : "password";
-            input.setAttribute("type", type);
-            // toggle the eye icon
-            this.classList.toggle('bi-eye');
-            this.classList.toggle('bi-eye-slash');
-        });
+            toggleRecord.addEventListener("click", function () {
+
+                // toggle the type attribute
+                const type = input.getAttribute("type") === "password" ? "text" : "password";
+                input.setAttribute("type", type);
+                // toggle the eye icon
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        <?php } ?>
     </script>
 <?php $this->stop() ?>

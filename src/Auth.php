@@ -19,9 +19,7 @@ class Auth
 
         $user_id = $_SESSION['user_id'];
 
-        $model = new User();
-
-        $user = $model->find($user_id);
+        $user = User::find($user_id);
 
         if (!$user) {
             return false;

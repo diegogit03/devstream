@@ -4,14 +4,23 @@ namespace DevStream\Models;
 
 class Stream extends Model
 {
-    public function __construct()
+    public $timestamps = false;
+
+    protected $fillable = [
+        'title',
+        'record_id',
+        'views',
+        'image_filename',
+        'user_id'
+    ];
+
+    public function user()
     {
-        parent::__construct();
-        $this->tableName = 'streams';
+        return $this->belongsTo(User::class);
     }
 
-    public function allFromUser($id)
+    public function messages()
     {
-        return $this->query('SELECT * FROM streams WHERE user_id = 1')->fetchAll();
+        return $this->hasMany(Message::class);
     }
 }

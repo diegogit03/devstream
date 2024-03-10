@@ -16,9 +16,7 @@ class AuthController extends Controller
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $model = new User();
-
-        $user = $model->findBy('email', $email);
+        $user =  User::firstWhere('email', $email);
 
         if (!password_verify($password, $user->password)) {
             return 'Credenciais inválidas!';

@@ -24,6 +24,7 @@
         "symfony/uid": "^7.0",
         "illuminate/database": "^10.46",
         "illuminate/events": "^10.46",
-        "illuminate/filesystem": "^10.46"
+        "illuminate/filesystem": "^10.46",
+        "workerman/phpsocket.io": "^2.0"
     }
 }
